@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="secure\ImageWeb1\Folder1\" />
+    <Folder Include="secure\ImageWeb1\Folder2\" />
+    <Folder Include="uploads\" />
+  </ItemGroup>
+
+</Project>
