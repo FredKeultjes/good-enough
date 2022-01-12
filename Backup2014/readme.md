@@ -1,9 +1,9 @@
 # Fred's Backup 2014 - Non-destructive backup
 
-You can select several sources and a target location.
-Each time the backup program runs, at the target location the backup folders for each of the
-source locations it updated and in a separate folder related to this instance previous 
-versions of updates or deleted files are archived. To save space files are archieved in a zip file (except huge files).
-In this instance folder you will also get a activity log file.
+This is a very basic backup program. Basically it will just copy from a set of source locations to a target location. With some extra features:
+- For each source location you can add some exclusions.
+- The program will save its settings in a file `backupjob.xml` in the same folder as the .exe file
+- Each time the backup program runs an instance directory is create that will contains logging and the previous versions of updated or deleted files to be archived.
+- To save space update or deleted files are archieved in a zip file (except huge files).
 
 For instance, as source specify several folders on your laptop and is target a folder on an external disk or network share.
