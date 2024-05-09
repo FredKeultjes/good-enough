@@ -27,28 +27,28 @@ namespace Backup2014
         /// <summary>
         /// New directories to create. Weight is <see cref="BackupWorkload.WeightCreateTargetDirectory"/>.
         /// </summary>
-        public Dictionary<string, string> mapRelativeSourceDirectoriesLCaseRemaining = new Dictionary<string, string>();
+        public readonly Dictionary<string, string> mapRelativeSourceDirectoriesLCaseRemaining = new Dictionary<string, string>();
         /// <summary>
         /// New files to copy. Weight is <see cref="BackupWorkload.WeightWriteFileByBytes"/>(size of source file);
         /// </summary>
-        public Dictionary<string, SourceFileInfo> mapRelaFileNameLCaseToSourceFile = new Dictionary<string, SourceFileInfo>();
+        public readonly Dictionary<string, SourceFileInfo> mapRelaFileNameLCaseToSourceFile = new Dictionary<string, SourceFileInfo>();
         /// <summary>
         /// Target directories to remove. Weight is <see cref="BackupWorkload.WeightRemoveTargetDirectory"/>.
         /// </summary>
-        public List<string> TargetDirectoriesToRemove = new List<string>();
+        public readonly List<string> TargetDirectoriesToRemove = new List<string>();
         /// <summary>
         /// Target files to remove. Weight is <see cref="BackupWorkload.WeightWriteFileByBytes"/>(size of target file);
         /// </summary>
-        public List<string> TargetRelaFilepathsToRemove = new List<string>();
+        public readonly List<string> TargetRelaFilepathsToRemove = new List<string>();
         /// <summary>
         /// Target files to replace. Weight is <see cref="BackupWorkload.WeightWriteFileByBytes"/>(size of target file) + <see cref="BackupWorkload.WeightWriteFileByBytes"/>(size of source file);
         /// </summary>
-        public List<SourceFileInfo> TargetFilesToReplace = new List<SourceFileInfo>();
+        public readonly List<SourceFileInfo> TargetFilesToReplace = new List<SourceFileInfo>();
 
 
-        private BackupTaskStep taskStep;
-        private BackupTask task;
-        public SourceDefinition SourceDef;
+        private readonly BackupTaskStep taskStep;
+        private readonly BackupTask task;
+        public readonly SourceDefinition SourceDef;
 
 
         public BackupWorkload(BackupTaskStep taskStep, SourceDefinition sourceDef)

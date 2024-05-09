@@ -22,8 +22,8 @@ namespace Backup2014
 {
     public class BackupTaskStep : IDisposable
     {
-        public BackupTask task;
-        private SourceDefinition sourceDef;
+        public readonly BackupTask task;
+        private readonly SourceDefinition sourceDef;
         public readonly string StepSourceDirPrefix;
         public readonly string StepTargetBaseDir;
         private BackupWorkload workload = null;

@@ -13,10 +13,7 @@ GNU General Public License for more details.
 
 */
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Backup2014

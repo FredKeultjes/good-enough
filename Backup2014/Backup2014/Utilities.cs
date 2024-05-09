@@ -57,10 +57,10 @@ namespace Backup2014
                 int iElemLength = (int)(posElemEnd - posWildcard);
                 string partText = wildCard.Substring(posWildcard, iElemLength);
 
-                if( partText.StartsWith("*") )
+                if( partText.StartsWith('*') )
                 {
                     posWildcard++;
-                    if( partText.EndsWith("*"))
+                    if( partText.EndsWith('*'))
                     {
                         if( strValue.IndexOf(partText.Substring(1, partText.Length-2), StringComparison.InvariantCultureIgnoreCase) >=0 )
                         {
@@ -75,7 +75,7 @@ namespace Backup2014
 	                    }
                     }
                 }
-                else if (partText.EndsWith("*"))
+                else if (partText.EndsWith('*'))
                 {
                     if  (string.Compare(strValue, 0, partText, 0, partText.Length - 1, true) == 0)
 	                {

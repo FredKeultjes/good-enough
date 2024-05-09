@@ -12,12 +12,9 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 */
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Experimental.IO;
+using System;
+using System.IO;
 
 namespace Backup2014
 {
@@ -27,7 +24,7 @@ namespace Backup2014
 	    public readonly DateTime tmLastWrite;
         public readonly long FileSize;
         public readonly bool IsReadOnly;
-        private SourceDefinition sourceDef;
+        private readonly SourceDefinition sourceDef;
         public readonly string RelaFilename;
 
         public SourceFileInfo(SourceDefinition sourceDef, string filePath)
@@ -49,7 +46,7 @@ namespace Backup2014
                 tmLastWrite = info.LastWriteTime;
             }
             int iPrefixLength = sourceDef.SourceDirectory.Length;
-            if (iPrefixLength > 0 && !sourceDef.SourceDirectory.EndsWith("\\"))
+            if (iPrefixLength > 0 && !sourceDef.SourceDirectory.EndsWith('\\'))
                 iPrefixLength++;
 
             RelaFilename = FilePath.Substring(iPrefixLength);
