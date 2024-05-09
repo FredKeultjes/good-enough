@@ -13,15 +13,11 @@ GNU General Public License for more details.
 
 */
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Xml;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Backup2014
 {
@@ -29,27 +25,65 @@ namespace Backup2014
     {
         private JobConfiguration settings = new JobConfiguration();
 
-        private ContextMenu notifyContextMenu;
+        private ContextMenuStrip notifyContextMenu;
         private NotifyIcon notifyIcon;
         public const string AppName = "Fred's Backup";
 
         public MainForm()
         {
+            
             notifyIcon = new NotifyIcon();
             notifyIcon.Text = AppName;
 
             notifyIcon.Icon = new Icon(Properties.Resources.BackupMinimized, 16, 16);
             notifyIcon.DoubleClick += new EventHandler(notifyIcon_DoubleClick);
+            
 
-            notifyContextMenu = new System.Windows.Forms.ContextMenu();
-            MenuItem itemRestore = new MenuItem("Restore", OnNotifyRestore);
-            itemRestore.DefaultItem = true;
-            notifyContextMenu.MenuItems.Add(itemRestore);
-            notifyContextMenu.MenuItems.Add("Exit", OnNotifyExit);
-            notifyIcon.ContextMenu = notifyContextMenu;
+            notifyContextMenu = new System.Windows.Forms.ContextMenuStrip();
+            this.ContextMenuStrip = notifyContextMenu;
+            notifyContextMenu.Opening += NotifyContextMenu_Opening;
+            notifyContextMenu.ItemClicked += NotifyContextMenu_ItemClicked;
+            var ms = new MenuStrip();
+            ms.Dock = DockStyle.Top;
+            ToolStripMenuItem itemRestore = new ToolStripMenuItem("Commands");
+            ms.Items.Add(itemRestore);
+            notifyIcon.ContextMenuStrip = notifyContextMenu;
             InitializeComponent();
 
             LoadSettings();
+        }
+
+        private void NotifyContextMenu_Opening(object sender, CancelEventArgs e)
+        {
+            // Clear the ContextMenuStrip control's Items collection.
+            notifyContextMenu.Items.Clear();
+
+            // Check the source control first.
+
+            // Populate the ContextMenuStrip control with its default items.
+            notifyContextMenu.Items.Add("Restore");
+            notifyContextMenu.Items.Add("Exit");
+
+            // Set Cancel to false. 
+            // It is optimized to true based on empty entry.
+            e.Cancel = false;
+        }
+
+        private void NotifyContextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Exit")
+            {
+                notifyIcon.Visible = false;
+                Application.Exit();
+            }
+            else if (e.ClickedItem.Text == "Restore")
+            {
+                OnNotifyRestore(sender, e);
+            }
+            else
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private BackupThread backupThread = null;
@@ -190,11 +224,6 @@ namespace Backup2014
         void notifyIcon_DoubleClick(object sender, EventArgs e)
         {
             OnNotifyRestore(sender, e);
-        }
-        private void OnNotifyExit(object sender, EventArgs e)
-        {
-            notifyIcon.Visible = false;
-            Application.Exit();
         }
         private void OnNotifyRestore(object sender, EventArgs e)
         {

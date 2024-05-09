@@ -12,14 +12,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 
 */
+using Microsoft.Experimental.IO;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using Microsoft.Experimental.IO;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO.Compression;
 
 namespace Backup2014
 {
@@ -282,7 +279,7 @@ namespace Backup2014
                         File.Delete(destinationFileName);
                 }
                 amountProcessed += BackupWorkload.WeightWriteFileByBytes(bytesRemaining);
-                throw ex;
+                throw;
             }
             return true;
         }

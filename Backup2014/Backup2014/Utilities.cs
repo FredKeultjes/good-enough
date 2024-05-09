@@ -13,11 +13,9 @@ GNU General Public License for more details.
 
 */
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using System.Threading.Tasks;
 
 
 namespace Backup2014
@@ -28,9 +26,7 @@ namespace Backup2014
         {
             get
             {
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
-                UriBuilder uri = new UriBuilder(codeBase);
-                string path = Uri.UnescapeDataString(uri.Path);
+                string path = Assembly.GetExecutingAssembly().Location;
                 return Path.GetDirectoryName(path);
             }
         }
@@ -105,7 +101,7 @@ namespace Backup2014
 
         public static string PrePendTextLines(string text, string prefix)
         {
-            StringBuilder result = new StringBuilder();
+            var result = new StringBuilder();
             int prevPos = 0;
             for (int pos = 0; pos < text.Length; pos++)
             {

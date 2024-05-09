@@ -353,9 +353,6 @@ namespace Backup2014
                     break;
                 }
             }
-
-
-            thread.Abort();
         }
     }
 
