@@ -1,0 +1,123 @@
+<html>
+
+<body>
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+<style>
+    #graphCanvas { border: 1px solid #c0c0c0;margin:0; padding:0}
+    
+</style>
+<script>
+function handleInput()
+{
+    var mul=0;
+    var mod=0;
+    try
+    {
+        mul = parseInt($("#impMul").val());
+        mod = parseInt($("#impMod").val());
+    }
+    catch
+    {
+
+    }
+
+    if( mul && mod )
+    {
+        calculateGraph(mul, mod, $("#impCol").is(":checked") );
+    }
+}
+function calculateGraph(multiplyer, modulo, useCol)
+{
+    var canvas$ = $('#graphCanvas');
+    var canvas = document.getElementById('graphCanvas');
+    var ctx = canvas.getContext ? canvas.getContext('2d') : null;    
+    ctx.clearRect(0, 0, canvas.height, canvas.height);
+    var m = 20;
+    var h = 900-2*m;
+    var cx = h/2+m;
+    var cy = cx;
+    var r = h/2;
+
+    var nodeStyle = "#FF0000";
+    var textStyle = "#9b673c";
+    var lineStyle = "#000000";
+
+    ctx.strokeStyle = "#808080";
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+    ctx.stroke();
+
+    ctx.font = '11pt Calibri';
+
+    ctx.strokeStyle = nodeStyle;
+
+    for(var p=0; p<modulo; p++)
+    {
+        var curSi = Math.sin(2 * Math.PI/modulo*p);
+        var curCo = -Math.cos(2 * Math.PI/modulo*p);
+        var px = cx + curSi * r;
+        var py = cy + curCo * r;
+        ctx.beginPath();
+        ctx.arc(px, py, 4, 0, 2 * Math.PI);
+        ctx.fillStyle = nodeStyle;
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = textStyle;
+        ctx.fillText(p, cx + curSi * (r+10)-5, cy + curCo * (r+10)+5);
+    }
+
+    ctx.strokeStyle = lineStyle;
+    var donePoint = new Array(modulo);
+    for(var p=1; p<modulo; p++)
+    {
+        var curP = p;
+        var prevPx = -1;
+        for(;;)
+        {
+            var curAng = 2 * Math.PI/modulo*curP;
+            var curSi = Math.sin(curAng);
+            var curCo = -Math.cos(curAng);
+            var px = cx + curSi * r;
+            var py = cy + curCo * r;
+
+            if( prevPx<0 )
+            {
+                donePoint[curP] = true;
+            }
+            else
+            {
+                var dx = prevPx-px; var dy = prevPy-py;
+                var l = Math.sqrt(dx*dx+dy*dy);
+                ctx.beginPath();
+                ctx.moveTo(prevPx,prevPy);
+                ctx.strokeStyle = useCol ? 'hsl('+ (720*r/l) +',100%,60%)' : lineStyle;
+
+                ctx.lineTo(px,py);
+                ctx.stroke();
+                if(donePoint[curP])
+                    break;
+                donePoint[curP] = true;
+            }
+
+            curP = (curP * multiplyer) % modulo;
+            prevPx = px; prevPy = py;
+        }
+    }
+}
+$(document).on("ready", function ()
+{
+    handleInput();
+    $("table input.inp").on("change keyup focusout", function(){
+
+        handleInput();
+       });
+})
+</script>
+<table>
+    <tr><th><label for="impMul">Multiplyer</label>:</th><td><input type="text" id="impMul" class="inp" value="2"/>&nbsp;&nbsp;&nbsp; <label for="impCol">Color:</label><input type="checkbox" id="impCol" class="inp" value="1"></td></tr>
+    <tr><th><label for="impMod"></label>Modulo</label>:</th><td><input type="text" id="impMod" class="inp" value="9"/></td></tr>
+</table>
+<canvas id="graphCanvas" width="900" height="900"></canvas>		   
+</body>
+</html>
